@@ -16,3 +16,5 @@ while(True):
         cv.imwrite('positive/{}.png'.format(loop_time), screenshot)
     elif key == ord('d'):
         cv.imwrite('negative/{}.png'.format(loop_time), screenshot)
+
+print('Done.')
