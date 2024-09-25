@@ -6,7 +6,7 @@ wincap = WindowCapture()
 loop_time = time()
 while(True):
     screenshot = wincap.get_screenshot()
-
+    cv.imshow('screen', screenshot)
 
     key = cv.waitKey(1)
     if key == ord('q'):
