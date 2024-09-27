@@ -37,6 +37,9 @@ class Detection:
             if not self.screenshot is None:
                 # do object detection
                 rectangles = self.cascade.detectMultiScale(self.screenshot)
+                # You can adjust groupThreshold and eps based on your specific needs.
+                # Increasing groupThreshold may merge more rectangles, while decreasing eps will make the grouping stricter.
+                # rectangles, weights = cv2.groupRectangles(rectangles.tolist(), groupThreshold=1, eps=0.2)
                 if len(rectangles) > 0:
                     print('Found {} targets'.format(len(rectangles)))
                 # lock the thread while updating the results
