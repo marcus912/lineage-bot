@@ -18,7 +18,7 @@ DEBUG = True
 # initialize the WindowCapture class
 wincap = WindowCapture()
 # load the detector
-detector = Detection('fireegg-2.jpg')
+detector = Detection('cascade/cascade.xml')
 # load an empty Vision class
 vision = Vision()
 # initialize the bot
