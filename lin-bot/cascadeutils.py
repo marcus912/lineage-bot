@@ -18,6 +18,7 @@ def generate_negative_description_file():
 
 # the opencv_annotation executable can be found in opencv/build/x64/vc15/bin
 # generate positive description file using:
+# $ C:/Users/User/Downloads/opencv/build/x64/vc15/bin/opencv_annotation.exe --annotations=pos.txt --images=positive/
 # $ C:/Users/Ben/learncodebygaming/opencv/build/x64/vc15/bin/opencv_annotation.exe --annotations=pos.txt --images=positive/
 
 # You click once to set the upper left corner, then again to set the lower right corner.
@@ -28,10 +29,15 @@ def generate_negative_description_file():
 # Will exit automatically when you've annotated all of the images
 
 # generate positive samples from the annotations to get a vector file using:
+# $ C:/Users/User/Downloads/opencv/build/x64/vc15/bin/opencv_createsamples.exe -info pos.txt -w 24 -h 24 -num 1000 -vec pos.vec
 # $ C:/Users/Ben/learncodebygaming/opencv/build/x64/vc15/bin/opencv_createsamples.exe -info pos.txt -w 24 -h 24 -num 1000 -vec pos.vec
 
 # train the cascade classifier model using:
+# $ C:/Users/User/Downloads/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data cascade/ -vec pos.vec -bg neg.txt -numPos 110 -numNeg 76 -numStages 10 -w 24 -h 24
 # $ C:/Users/Ben/learncodebygaming/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data cascade/ -vec pos.vec -bg neg.txt -numPos 200 -numNeg 100 -numStages 10 -w 24 -h 24
 
 # my final classifier training arguments:
+# $ C:/Users/User/Downloads/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data cascade/ -vec pos.vec -bg neg.txt -precalcValBufSize 6000 -precalcIdxBufSize 6000 -numPos 110 -numNeg 76 -numStages 12 -w 24 -h 24 -maxFalseAlarmRate 0.3 -minHitRate 0.999
 # $ C:/Users/Ben/learncodebygaming/opencv/build/x64/vc15/bin/opencv_traincascade.exe -data cascade/ -vec pos.vec -bg neg.txt -precalcValBufSize 6000 -precalcIdxBufSize 6000 -numPos 200 -numNeg 1000 -numStages 12 -w 24 -h 24 -maxFalseAlarmRate 0.4 -minHitRate 0.999
+
+generate_negative_description_file()
