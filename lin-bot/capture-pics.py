@@ -14,8 +14,8 @@ while(True):
         break
     elif key == ord('f'):
         cv.imwrite('positive/{}.png'.format(loop_time), screenshot)
-        print('write a positive image')
+        print('positive image {}'.format(loop_time))
     elif key == ord('d'):
         cv.imwrite('negative/{}.png'.format(loop_time), screenshot)
-        print('write a negative image')
+        print('negative image {}'.format(loop_time))
 print('Done.')

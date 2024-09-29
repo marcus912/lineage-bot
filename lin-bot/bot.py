@@ -19,8 +19,10 @@ class AlbionBot:
     INITIALIZING_SECONDS = 2
     MINING_SECONDS = 14
     MOVEMENT_STOPPED_THRESHOLD = 0.975
-    IGNORE_RADIUS = 130
+    IGNORE_RADIUS = 300
     TOOLTIP_MATCH_THRESHOLD = 0.72
+    ATTACK_INTERVAL = 1.5
+    SKILL_F7_DELAY = 6
 
     # threading properties
     stopped = True
@@ -31,6 +33,7 @@ class AlbionBot:
     targets = []
     screenshot = None
     timestamp = None
+    lastf7time = time() - SKILL_F7_DELAY
     movement_screenshot = None
     window_offset = (0,0)
     window_w = 0
@@ -56,6 +59,8 @@ class AlbionBot:
         # mark the time at which this started so we know when to complete it
         self.state = BotState.INITIALIZING
         self.timestamp = time()
+        # our character is always in the center of the screen
+        self.my_pos = (self.window_w / 2, self.window_h / 2)
 
     def click_next_target(self):
         # 1. order targets by distance from center
@@ -68,13 +73,22 @@ class AlbionBot:
         # 6. click on the found target and return true
         targets = self.targets_ordered_by_distance(self.targets)
         if len(targets) > 0:
+            print('{} Targets'.format(len(targets)))
+            pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.1)
             target_pos = targets[0]
             screen_x, screen_y = self.get_screen_position(target_pos)
             print('Moving mouse to x:{} y:{}'.format(screen_x, screen_y))
             # move the mouse
             pyautogui.moveTo(x=screen_x, y=screen_y)
-            pyautogui.click()
+            # check skill
+            if len(targets) > 3 or (time() - self.lastf7time) > self.SKILL_F7_DELAY:
+                pyautogui.press('f7')
+                self.lastf7time = time()
+            pyautogui.click(clicks=3, interval=0.2)
             pyautogui.mouseDown(x=screen_x, y=screen_y)
+            sleep(self.ATTACK_INTERVAL)
+            pyautogui.mouseUp()
+            print('End a click round')
             return True
         else:
             return False
@@ -104,13 +118,11 @@ class AlbionBot:
         return False
 
     def targets_ordered_by_distance(self, targets):
-        # our character is always in the center of the screen
-        my_pos = (self.window_w / 2, self.window_h / 2)
         # searched "python order points by distance from point"
         # simply uses the pythagorean theorem
         # https://stackoverflow.com/a/30636138/4655368
         def pythagorean_distance(pos):
-            return sqrt((pos[0] - my_pos[0])**2 + (pos[1] - my_pos[1])**2)
+            return sqrt((pos[0] - self.my_pos[0])**2 + (pos[1] - self.my_pos[1])**2)
         targets.sort(key=pythagorean_distance)
 
         # print(my_pos)
@@ -120,7 +132,8 @@ class AlbionBot:
 
         # ignore targets at are too close to our character (within 130 pixels) to avoid 
         # re-clicking a deposit we just mined
-        targets = [t for t in targets if pythagorean_distance(t) > self.IGNORE_RADIUS]
+        if len(targets) > 0:
+            targets = [t for t in targets if pythagorean_distance(t) < self.IGNORE_RADIUS]
 
         return targets
 
@@ -151,9 +164,8 @@ class AlbionBot:
         # character is at the middle of the screen at ex. (100, 100), and our last
         # click was at (120, 120), then to undo this we must now click at (80, 80).
         # our character is always in the center of the screen
-        my_pos = (self.window_w / 2, self.window_h / 2)
-        mirrored_click_x = my_pos[0] - (last_click[0] - my_pos[0])
-        mirrored_click_y = my_pos[1] - (last_click[1] - my_pos[1])
+        mirrored_click_x = self.my_pos[0] - (last_click[0] - self.my_pos[0])
+        mirrored_click_y = self.my_pos[1] - (last_click[1] - self.my_pos[1])
         # convert this screenshot position to a screen position
         screen_x, screen_y = self.get_screen_position((mirrored_click_x, mirrored_click_y))
         print('Backtracking to x:{} y:{}'.format(screen_x, screen_y))
