@@ -53,7 +53,7 @@ class AlbionBot:
         self.window_h = window_size[1]
 
         # pre-load the needle image used to confirm our object detection
-        self.limestone_tooltip = cv.imread('fireegg.jpg', cv.IMREAD_UNCHANGED)
+        self.limestone_tooltip = cv.imread('model/fireegg.jpg', cv.IMREAD_UNCHANGED)
 
         # start bot in the initializing mode to allow us time to get setup.
         # mark the time at which this started so we know when to complete it
@@ -74,21 +74,28 @@ class AlbionBot:
         targets = self.targets_ordered_by_distance(self.targets)
         if len(targets) > 0:
             print('{} Targets'.format(len(targets)))
-            pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.1)
             target_pos = targets[0]
             screen_x, screen_y = self.get_screen_position(target_pos)
             print('Moving mouse to x:{} y:{}'.format(screen_x, screen_y))
             # move the mouse
             pyautogui.moveTo(x=screen_x, y=screen_y)
             # check skill
-            if len(targets) > 3 or (time() - self.lastf7time) > self.SKILL_F7_DELAY:
+            if len(targets) > 2 or (time() - self.lastf7time) > self.SKILL_F7_DELAY:
                 pyautogui.press('f7')
+                pyautogui.click()
+                pyautogui.press('f7')
+                pyautogui.click()
+                pyautogui.press('f7')
+                pyautogui.press('f7')
+                pyautogui.click()
+                print('Use F7 skill')
                 self.lastf7time = time()
-            pyautogui.click(clicks=3, interval=0.2)
             pyautogui.mouseDown(x=screen_x, y=screen_y)
             sleep(self.ATTACK_INTERVAL)
             pyautogui.mouseUp()
             print('End a click round')
+            pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.1)
+            pyautogui.click(clicks=3, interval=0.1)
             return True
         else:
             return False
