@@ -23,6 +23,8 @@ class AlbionBot:
     TOOLTIP_MATCH_THRESHOLD = 0.72
     ATTACK_INTERVAL = 1.5
     SKILL_F7_DELAY = 6
+    SKILL_MOVE_DELAY = 20
+    DETECTION_WAITING_THRESHOLD = 6
 
     # threading properties
     stopped = True
@@ -33,7 +35,9 @@ class AlbionBot:
     targets = []
     screenshot = None
     timestamp = None
-    lastf7time = time() - SKILL_F7_DELAY
+    last_f7_time = time() - SKILL_F7_DELAY
+    last_move_time = time()
+    last_detect_time = time()
     movement_screenshot = None
     window_offset = (0,0)
     window_w = 0
@@ -71,16 +75,21 @@ class AlbionBot:
         # endloop
         # 5. if no target was found return false
         # 6. click on the found target and return true
+        if (time() - self.last_move_time) > self.SKILL_MOVE_DELAY:
+            print('Reach move delay, press f5 to move')
+            self.press_move()
+
         targets = self.targets_ordered_by_distance(self.targets)
         if len(targets) > 0:
-            print('{} Targets'.format(len(targets)))
+            print('Found {} Targets'.format(len(targets)))
+            self.last_detect_time = time()
             target_pos = targets[0]
             screen_x, screen_y = self.get_screen_position(target_pos)
             print('Moving mouse to x:{} y:{}'.format(screen_x, screen_y))
             # move the mouse
             pyautogui.moveTo(x=screen_x, y=screen_y)
             # check skill
-            if len(targets) > 2 or (time() - self.lastf7time) > self.SKILL_F7_DELAY:
+            if len(targets) > 2 or (time() - self.last_f7_time) > self.SKILL_F7_DELAY:
                 pyautogui.press('f7')
                 pyautogui.click()
                 pyautogui.press('f7')
@@ -89,16 +98,27 @@ class AlbionBot:
                 pyautogui.press('f7')
                 pyautogui.click()
                 print('Use F7 skill')
-                self.lastf7time = time()
-            pyautogui.mouseDown(x=screen_x, y=screen_y)
+                self.last_f7_time = time()
+            pyautogui.mouseDown()
+            pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.5)
             sleep(self.ATTACK_INTERVAL)
             pyautogui.mouseUp()
             print('End a click round')
-            pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.1)
-            pyautogui.click(clicks=3, interval=0.1)
+
             return True
         else:
+            if (time() - self.last_detect_time) > self.DETECTION_WAITING_THRESHOLD:
+                print('Hit detection waiting threshold, press f5 to move')
+                self.press_move()
             return False
+
+    def press_move(self):
+        print('press f5')
+        print('original last_detect_time {}', self.last_detect_time)
+        pyautogui.press('f5', presses=2, interval=0.1)
+        self.last_move_time = time()
+        self.last_detect_time = time()
+        print('New last_detect_time {}', self.last_detect_time)
 
     def have_stopped_moving(self):
         # if we haven't stored a screenshot to compare to, do that first
