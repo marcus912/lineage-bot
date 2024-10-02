@@ -19,12 +19,14 @@ class AlbionBot:
     INITIALIZING_SECONDS = 2
     MINING_SECONDS = 14
     MOVEMENT_STOPPED_THRESHOLD = 0.975
-    IGNORE_RADIUS = 300
+    IGNORE_RADIUS = 200
     TOOLTIP_MATCH_THRESHOLD = 0.72
     ATTACK_INTERVAL = 1.5
-    SKILL_F7_DELAY = 6
-    SKILL_MOVE_DELAY = 20
-    DETECTION_WAITING_THRESHOLD = 6
+    SKILL_F7_DELAY = 5
+    SKILL_F7_AFTER_MOVE_DELAY = 3
+    SKILL_F9_DELAY = 180
+    SKILL_MOVE_DELAY = 25
+    DETECTION_WAITING_THRESHOLD = 7
 
     # threading properties
     stopped = True
@@ -36,6 +38,7 @@ class AlbionBot:
     screenshot = None
     timestamp = None
     last_f7_time = time() - SKILL_F7_DELAY
+    last_f9_time = time()
     last_move_time = time()
     last_detect_time = time()
     movement_screenshot = None
@@ -89,22 +92,27 @@ class AlbionBot:
             # move the mouse
             pyautogui.moveTo(x=screen_x, y=screen_y)
             # check skill
-            if len(targets) > 2 or (time() - self.last_f7_time) > self.SKILL_F7_DELAY:
-                pyautogui.press('f7')
-                pyautogui.click()
-                pyautogui.press('f7')
-                pyautogui.click()
-                pyautogui.press('f7')
-                pyautogui.press('f7')
-                pyautogui.click()
-                print('Use F7 skill')
-                self.last_f7_time = time()
+            last_f7_time = time() - self.last_f7_time
+            if (time() - self.last_move_time) > self.SKILL_F7_AFTER_MOVE_DELAY:
+                if len(targets) > 2 or last_f7_time > self.SKILL_F7_DELAY:
+                    pyautogui.press('f7')
+                    pyautogui.click()
+                    pyautogui.press('f7')
+                    pyautogui.click()
+                    pyautogui.press('f7')
+                    pyautogui.press('f7')
+                    pyautogui.click()
+                    print('Use F7 skill')
+                    self.last_f7_time = time()
             pyautogui.mouseDown()
             pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.5)
             sleep(self.ATTACK_INTERVAL)
             pyautogui.mouseUp()
+            pyautogui.click()
+            if (time() - self.last_f9_time) > self.SKILL_F9_DELAY:
+                pyautogui.press('f9')
+                self.last_f9_time = time()
             print('End a click round')
-
             return True
         else:
             if (time() - self.last_detect_time) > self.DETECTION_WAITING_THRESHOLD:
@@ -119,6 +127,7 @@ class AlbionBot:
         self.last_move_time = time()
         self.last_detect_time = time()
         print('New last_detect_time {}', self.last_detect_time)
+        pyautogui.press('esc', presses=2, interval=0.1)
 
     def have_stopped_moving(self):
         # if we haven't stored a screenshot to compare to, do that first
