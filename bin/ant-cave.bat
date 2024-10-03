@@ -1,8 +1,18 @@
 @ECHO OFF
-cd ../
+
+SET VAR_NAME=%LIN_BOT_PATH%
+
+IF "%VAR_NAME%"=="" (
+    echo Environment variableLIN_BOT_PATH is not set.
+    exit /b 1
+) ELSE (
+    echo Environment variable LIN_BOT_PATH is set to %VAR_NAME%.
+)
+
+cd %LIN_BOT_PATH%
 echo Check Python venv
 if not exist ".venv" (
-    echo folder not exists
+    echo folder not exists, create venv
     python -m venv .venv
 )
 
