@@ -16,17 +16,17 @@ class BotState:
 class AlbionBot:
     
     # constants
-    INITIALIZING_SECONDS = 2
+    INITIALIZING_SECONDS = 3
     MINING_SECONDS = 14
     MOVEMENT_STOPPED_THRESHOLD = 0.975
     IGNORE_RADIUS = 200
     TOOLTIP_MATCH_THRESHOLD = 0.72
     ATTACK_INTERVAL = 1.5
-    SKILL_F7_DELAY = 5
-    SKILL_F7_AFTER_MOVE_DELAY = 3
-    SKILL_F9_DELAY = 180
+    SKILL_F7_DELAY = 3.5
+    SKILL_F7_AFTER_MOVE_DELAY = 1.5
+    SKILL_F9_DELAY = 60
     SKILL_MOVE_DELAY = 25
-    DETECTION_WAITING_THRESHOLD = 7
+    DETECTION_WAITING_THRESHOLD = 8
 
     # threading properties
     stopped = True
@@ -110,7 +110,7 @@ class AlbionBot:
             pyautogui.mouseUp()
             pyautogui.click()
             if (time() - self.last_f9_time) > self.SKILL_F9_DELAY:
-                pyautogui.press('f9')
+                pyautogui.press('f9', interval=1)
                 self.last_f9_time = time()
             print('End a click round')
             return True
