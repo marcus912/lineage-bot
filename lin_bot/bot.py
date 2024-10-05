@@ -128,6 +128,7 @@ class AlbionBot:
         self.last_detect_time = time()
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.press('esc', presses=2, interval=0.1)
+        pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1], duration=0.5)
 
     def have_stopped_moving(self):
         # if we haven't stored a screenshot to compare to, do that first
