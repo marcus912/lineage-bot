@@ -3,8 +3,8 @@ from testimagedetection import ImageDetection
 from vision import Vision
 from pathlib import Path
 
-model_folder = 'ant'
-num_neg = '4000'
+model_folder = 'dragon6'
+num_neg = '2000'
 detector = ImageDetection(['{}/trained_models/{}/cascade/cascade.xml'.format(model_folder, num_neg)])
 vision = Vision()
 pathlist = Path('{}/positive'.format(model_folder)).glob('*.png')
