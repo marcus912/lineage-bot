@@ -25,7 +25,7 @@ class AlbionBot:
     SKILL_F7_DELAY = 3.5
     SKILL_F7_AFTER_MOVE_DELAY = 1.5
     SKILL_F9_DELAY = 60
-    SKILL_MOVE_DELAY = 25
+    SKILL_MOVE_DELAY = 20
     DETECTION_WAITING_THRESHOLD = 8
 
     # threading properties
