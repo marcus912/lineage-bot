@@ -4,7 +4,7 @@ from vision import Vision
 from pathlib import Path
 
 model_folder = 'dragon6'
-num_neg = '2000'
+num_neg = '3000'
 detector = ImageDetection(['{}/trained_models/{}/cascade/cascade.xml'.format(model_folder, num_neg)])
 vision = Vision()
 pathlist = Path('{}/positive'.format(model_folder)).glob('*.png')
