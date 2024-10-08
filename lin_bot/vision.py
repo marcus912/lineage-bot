@@ -32,7 +32,8 @@ class Vision:
             bottom_right = (x + w, y + h)
             # draw the box
             cv.rectangle(haystack_img, top_left, bottom_right, line_color, lineType=line_type)
-
+        # cv.rectangle(haystack_img, (10,10), (45,45), line_color, lineType=line_type)
+        # cv.rectangle(haystack_img, (397, 251), (397, 251), line_color, line_type)
         return haystack_img
 
     # given a list of [x, y] positions and a canvas image to draw on, return an image with all

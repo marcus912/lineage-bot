@@ -12,14 +12,22 @@ class Detection:
     cascade = None
     cascades = []
     screenshot = None
+    scale_factor = None
+    min_neighbors = None
+    max_size = None
+    min_size = None
 
-    def __init__(self, model_file_paths):
+    def __init__(self, model_file_paths, scale_factor, min_neighbors, max_size, min_size):
         # create a thread lock object
         self.lock = Lock()
         # load the trained model
         # for model_file_path in model_file_paths:
         #     self.cascades.append(cv.CascadeClassifier(model_file_path))
         self.cascade = cv.CascadeClassifier(model_file_paths[0])
+        self.scale_factor = scale_factor
+        self.min_neighbors = min_neighbors
+        self.max_size = max_size
+        self.min_size = min_size
 
     def update(self, screenshot):
         self.lock.acquire()
@@ -42,7 +50,9 @@ class Detection:
                 # rectangles = []
                 # for cascade in self.cascades:
                 #     rectangles = cascade.detectMultiScale(self.screenshot)
-                rectangles = self.cascade.detectMultiScale(self.screenshot)
+                # rectangles = self.cascade.detectMultiScale(self.screenshot)
+                rectangles = self.cascade.detectMultiScale(self.screenshot, scaleFactor=self.scale_factor, minNeighbors=self.min_neighbors,
+                                                           minSize=self.min_size, maxSize=self.max_size)
                 # You can adjust groupThreshold and eps based on your specific needs.
                 # Increasing groupThreshold may merge more rectangles, while decreasing eps will make the grouping stricter.
                 # rectangles, weights = cv2.groupRectangles(rectangles.tolist(), groupThreshold=1, eps=0.2)
