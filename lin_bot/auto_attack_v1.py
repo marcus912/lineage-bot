@@ -18,7 +18,7 @@ DEBUG = False
 # initialize the WindowCapture class
 wincap = WindowCapture()
 # load the detector
-detector = Detection(['cascade/cascade.xml'])
+detector = Detection(['cascade/cascade.xml'], None, None, None, None)
 # load an empty Vision class
 vision = Vision()
 # initialize the bot
