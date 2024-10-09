@@ -26,7 +26,7 @@ class Dragon6Bot:
     SKILL_F7_DELAY = 3
     SKILL_F7_AFTER_MOVE_DELAY = 1.5
     SKILL_F9_DELAY = 60
-    SKILL_MOVE_DELAY = 18
+    SKILL_MOVE_DELAY = 20
     DETECTION_WAITING_THRESHOLD = 6
     START_SEARCH_THRESHOLD = 2
     SEARCH_INTERVAL = 3
@@ -121,9 +121,10 @@ class Dragon6Bot:
         pyautogui.press('f5', presses=2, interval=0.1)
         self.last_move_time = time()
         self.last_detect_time = time()
+        self.last_search_time = time()
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.press('esc', presses=2, interval=0.1)
-        pyautogui.moveTo(x=self.my_pos[0]+20, y=self.my_pos[1], duration=0.5)
+        pyautogui.moveTo(x=self.my_pos[0], y=self.my_pos[1]+5, duration=0.5)
 
     def have_stopped_moving(self):
         # if we haven't stored a screenshot to compare to, do that first

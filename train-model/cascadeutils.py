@@ -1,6 +1,6 @@
 import os
 
-model_folder = 'dragon6'
+model_folder = 'stairs'
 # reads all the files in the /negative folder and generates neg.txt from them.
 # we'll run it manually like this:
 # $ python
