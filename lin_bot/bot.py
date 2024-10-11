@@ -1,8 +1,9 @@
+from math import sqrt
+from threading import Thread, Lock
+from time import sleep, time
+
 import cv2 as cv
 import pyautogui
-from time import sleep, time
-from threading import Thread, Lock
-from math import sqrt
 
 
 class BotState:
@@ -60,7 +61,7 @@ class AlbionBot:
         self.window_h = window_size[1]
 
         # pre-load the needle image used to confirm our object detection
-        self.limestone_tooltip = cv.imread('model/fireegg.jpg', cv.IMREAD_UNCHANGED)
+        # self.limestone_tooltip = cv.imread('model/fireegg.jpg', cv.IMREAD_UNCHANGED)
 
         # start bot in the initializing mode to allow us time to get setup.
         # mark the time at which this started so we know when to complete it

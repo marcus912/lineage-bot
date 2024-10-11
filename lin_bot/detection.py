@@ -1,5 +1,6 @@
-import cv2 as cv
 from threading import Thread, Lock
+
+import cv2 as cv
 
 
 class Detection:
@@ -10,20 +11,19 @@ class Detection:
     rectangles = []
     # properties
     cascade = None
-    cascades = []
     screenshot = None
     scale_factor = None
     min_neighbors = None
     max_size = None
     min_size = None
 
-    def __init__(self, model_file_paths, scale_factor, min_neighbors, max_size, min_size):
+    def __init__(self, model_file_path, scale_factor, min_neighbors, max_size, min_size):
         # create a thread lock object
         self.lock = Lock()
         # load the trained model
         # for model_file_path in model_file_paths:
         #     self.cascades.append(cv.CascadeClassifier(model_file_path))
-        self.cascade = cv.CascadeClassifier(model_file_paths[0])
+        self.cascade = cv.CascadeClassifier(model_file_path)
         self.scale_factor = scale_factor
         self.min_neighbors = min_neighbors
         self.max_size = max_size
@@ -47,10 +47,7 @@ class Detection:
         while not self.stopped:
             if not self.screenshot is None:
                 # do object detection
-                # rectangles = []
-                # for cascade in self.cascades:
-                #     rectangles = cascade.detectMultiScale(self.screenshot)
-                # rectangles = self.cascade.detectMultiScale(self.screenshot)
+
                 rectangles = self.cascade.detectMultiScale(self.screenshot, scaleFactor=self.scale_factor, minNeighbors=self.min_neighbors,
                                                            minSize=self.min_size, maxSize=self.max_size)
                 # You can adjust groupThreshold and eps based on your specific needs.
