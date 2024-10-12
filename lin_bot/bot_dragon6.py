@@ -22,7 +22,7 @@ class Dragon6Bot:
     MOVEMENT_STOPPED_THRESHOLD = 0.975
     OUTER_IGNORE_RADIUS = 150
     INNER_IGNORE_RADIUS = 2.5
-    STAIR_DETECT_RADIUS = 250
+    STAIR_DETECT_RADIUS = 350
     TOOLTIP_MATCH_THRESHOLD = 0.72
     ATTACK_INTERVAL = 2
     SKILL_F7_DELAY = 3
@@ -83,6 +83,7 @@ class Dragon6Bot:
             print('Reach move delay, press f5 to move')
             self.press_move()
 
+        # Detect stairs
         s_targets = self.stair_targets_ordered_by_distance(self.stair_targets)
         if len(s_targets) > 0:
             print('Avoid the stair!')

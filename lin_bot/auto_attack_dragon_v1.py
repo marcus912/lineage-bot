@@ -4,7 +4,7 @@ import cv2 as cv
 
 from bot_dragon6 import Dragon6Bot, BotState
 from detection import Detection
-from lin_bot.detection_yolo import YoloDetection
+from detection_yolo import YoloDetection
 from vision import Vision
 from windowcapture import WindowCapture
 
@@ -14,7 +14,7 @@ from windowcapture import WindowCapture
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-DEBUG = True
+DEBUG = False
 
 # initialize the WindowCapture class
 wincap = WindowCapture()
