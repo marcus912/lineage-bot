@@ -1,6 +1,9 @@
 from math import sqrt
 from threading import Thread, Lock
 from time import sleep, time
+
+from sympy.plotting.intervalmath import interval
+
 from common.bot_utils import targets_ordered_by_distance, get_screen_position, find_next_target
 
 import cv2 as cv
@@ -19,20 +22,20 @@ class La3Bot:
     
     # constants
     INITIALIZING_SECONDS = 5
-    OUTER_IGNORE_RADIUS = 350
+    OUTER_IGNORE_RADIUS = 500
     INNER_IGNORE_RADIUS = 0
     STAIR_DETECT_RADIUS = 250
     # ignore same position targets if the distance gather than radius
     IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 80
     # Ignore target error margin
     IGNORE_TARGET_ERROR_MARGIN_RADIUS = 10
-    ATTACK_INTERVAL = 1.2
+    ATTACK_INTERVAL = 1.5
     SKILL_F7_DELAY = 5
     SKILL_F7_INTERVAL = 0.5
     SKILL_F7_AFTER_MOVE_DELAY = 0
     SKILL_F9_DELAY = 999999
-    SKILL_MOVE_DELAY = 18
-    DETECTION_WAITING_THRESHOLD = 3
+    SKILL_MOVE_DELAY = 15
+    DETECTION_WAITING_THRESHOLD = 4
     START_SEARCH_THRESHOLD = 2
     SEARCH_INTERVAL = 3
     # ENABLE FLAG
@@ -90,10 +93,10 @@ class La3Bot:
         if len(s_targets) > 0:
             print('Avoid the stair!')
             self.press_move()
-        return True
-        targets = targets_ordered_by_distance(self.targets, self.stair_targets,
+            return True
+        targets = targets_ordered_by_distance(self.targets, self.my_pos,
                                               self.INNER_IGNORE_RADIUS, self.OUTER_IGNORE_RADIUS)
-        print('Found {} potential Targets'.format(len(targets)))
+        # print('Found {} potential Targets'.format(len(targets)))
         target_pos = find_next_target(targets, self.ignore_positions, self.IGNORE_TARGET_ERROR_MARGIN_RADIUS)
         if target_pos:
             self.last_detect_time = time()
@@ -102,23 +105,26 @@ class La3Bot:
             screen_x, screen_y = get_screen_position(target_pos, self.window_offset)
             print('Target position x:{} y:{}'.format(screen_x, screen_y))
             # move the mouse
-            # pyautogui.moveTo(x=screen_x, y=screen_y)
+            pyautogui.moveTo(x=screen_x, y=screen_y)
+            sleep(0.2)
             last_f7_time = time() - self.last_f7_time
             if (self.ENABLE_F7
                 and (time() - self.last_move_time) > self.SKILL_F7_AFTER_MOVE_DELAY
                 and last_f7_time > self.SKILL_F7_DELAY):
                 print('Use F7 skill')
                 pyautogui.press('f7')
-                pyautogui.click(x=screen_x, y=screen_y)
+                pyautogui.click()
                 self.last_f7_time = time()
                 sleep(self.SKILL_F7_INTERVAL)
             else:
-                pyautogui.mouseDown(x=screen_x, y=screen_y)
+                pyautogui.mouseDown()
                 sleep(self.ATTACK_INTERVAL)
                 pyautogui.mouseUp()
             # add to the ignore list if the distance is gather than radius
             if target_pos[2] > self.IGNORE_TARGET_POSITION_DISTANCE_RADIUS:
                 self.ignore_positions.append(target_pos[0] + target_pos[1] + target_pos[2])
+                print('Add {} to ignore positions: '.format(target_pos))
+                print(self.ignore_positions)
             print('End a click round')
             # check whether to move
             if (time() - self.last_move_time) > self.SKILL_MOVE_DELAY:
@@ -148,8 +154,7 @@ class La3Bot:
         self.last_search_time = time()
         self.ignore_positions = []
         print('New last_detect_time {}', self.last_detect_time)
-        pyautogui.press('esc', presses=2, interval=0.1)
-        pyautogui.click(x=self.my_pos[0], y=self.my_pos[1] + 20)
+        pyautogui.click(x=self.my_pos[0] + 50, y=self.my_pos[1] + 50, clicks=2, interval=0.2)
 
     # threading methods
 
@@ -187,3 +192,4 @@ class La3Bot:
                 # check the given click point targets,
                 # then click it.
                 self.click_next_target()
+                pyautogui.press('esc', presses=2, interval=0.2)

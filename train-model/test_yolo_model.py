@@ -9,18 +9,17 @@ detector = YoloDetection('la3/best.pt')
 vision = Vision()
 
 wincap.start()
-# detector.start()
+detector.start()
 
 while (True):
 
     # if we don't have a screenshot yet, don't run the code below this point yet
     if wincap.screenshot is None:
         continue
-    # detector.update(wincap.screenshot)
-    # draw the detection results onto the original image
-    # annotated_frame = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
-    results = detector.predict(wincap.screenshot)
-    annotated_frame = results[0].plot()
+    detector.update(wincap.screenshot)
+    annotated_frame = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
+    # results = detector.predict(wincap.screenshot)
+    # annotated_frame = results[0].plot()
 
     # display the images
     cv.imshow('Matches', annotated_frame)
