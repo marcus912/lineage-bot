@@ -16,11 +16,14 @@ while (True):
     # if we don't have a screenshot yet, don't run the code below this point yet
     if wincap.screenshot is None:
         continue
-    detector.update(wincap.screenshot)
+    # detector.update(wincap.screenshot)
     # draw the detection results onto the original image
-    detection_image = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
+    # detection_image = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
+    results = detector.predict(wincap.screenshot)
+    annotated_frame = results[0].plot()
+
     # display the images
-    cv.imshow('Matches', detection_image)
+    cv.imshow('Matches', annotated_frame)
     # press 'q' with the output window focused to exit.
     # waits 1 ms every loop to process key presses
     key = cv.waitKey(1)
