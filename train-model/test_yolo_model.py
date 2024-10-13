@@ -5,7 +5,7 @@ from vision import Vision
 from windowcapture import WindowCapture
 
 wincap = WindowCapture()
-detector = YoloDetection('stairs/best.pt')
+detector = YoloDetection('la3/best.pt')
 vision = Vision()
 
 wincap.start()

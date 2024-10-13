@@ -26,6 +26,7 @@ class YoloDetection:
         rectangles = []
         for result in results:
             boxes = result.boxes.cpu().numpy()
+            print(boxes)
             print('conf=', boxes.conf, ' len=', len(boxes.xyxy))
             xyxys = boxes.xyxy
             for xyxy in xyxys:

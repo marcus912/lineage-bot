@@ -6,7 +6,7 @@ from vision import Vision
 model_folder = 'stairs'
 pathlist = Path('{}/positive'.format(model_folder)).glob('*.png')
 vision = Vision()
-detector = YoloDetection('stairs/best.pt')
+detector = YoloDetection('{}/best.pt',format(model_folder))
 
 for path in pathlist:
     image_path = str(path)
