@@ -9,7 +9,7 @@ detector = YoloDetection('la3/best.pt')
 vision = Vision()
 
 wincap.start()
-detector.start()
+# detector.start()
 
 while (True):
 
@@ -18,7 +18,7 @@ while (True):
         continue
     # detector.update(wincap.screenshot)
     # draw the detection results onto the original image
-    # detection_image = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
+    # annotated_frame = vision.draw_rectangles(wincap.screenshot, detector.rectangles)
     results = detector.predict(wincap.screenshot)
     annotated_frame = results[0].plot()
 
