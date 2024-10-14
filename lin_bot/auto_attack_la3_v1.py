@@ -10,12 +10,12 @@ from windowcapture import WindowCapture
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-DEBUG = False
+DEBUG = True
 
 # initialize the WindowCapture class
 wincap = WindowCapture()
 # load the detector
-detector = YoloDetection('model/yolo/la3.pt', conf=0.75)
+detector = YoloDetection('model/yolo/la3-v3.pt', conf=0.75)
 # load yolo model
 stair_detector = YoloDetection('model/yolo/stairs.pt')
 # load an empty Vision class
