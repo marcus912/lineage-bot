@@ -26,12 +26,14 @@ class Vision:
         line_color = (0, 255, 0)
         line_type = cv.LINE_4
 
-        for (x, y, w, h) in rectangles:
+        for (x, y, w, h, name) in rectangles:
             # determine the box positions
             top_left = (x, y)
             bottom_right = (x + w, y + h)
             # draw the box
             cv.rectangle(haystack_img, top_left, bottom_right, line_color, lineType=line_type)
+            cv.putText(haystack_img, name, (x, y),
+                        cv.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         return haystack_img
 

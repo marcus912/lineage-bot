@@ -29,12 +29,13 @@ class YoloDetection:
             print(boxes)
             print('conf=', boxes.conf, ' len=', len(boxes.xyxy))
             xyxys = boxes.xyxy
-            for xyxy in xyxys:
+            for i in range(len(xyxys)):
+                xyxy = xyxys[i]
                 x = int(xyxy[0])
                 y = int(xyxy[1])
                 w = int(xyxy[2]) - int(xyxy[0])
                 h = int(xyxy[3]) - int(xyxy[1])
-                rectangles.append([x, y, w, h])
+                rectangles.append([x, y, w, h, result.names[int(boxes.cls[i])]])
                 # cv.rectangle(frame, (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3])), (0, 255, 0), 2)
         return rectangles
 
