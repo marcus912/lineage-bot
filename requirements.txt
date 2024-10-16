@@ -1,5 +1,4 @@
 opencv-python==4.10.0.84
 PyAutoGUI==0.9.54
-numpy==2.1.1
 pywin32==306
 ultralytics==8.3.9
