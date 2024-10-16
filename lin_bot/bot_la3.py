@@ -1,4 +1,3 @@
-from math import sqrt
 from threading import Thread, Lock
 from time import sleep, time
 
@@ -29,13 +28,13 @@ class La3Bot:
     IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 80
     # Ignore target error margin
     IGNORE_TARGET_ERROR_MARGIN_RADIUS = 10
-    ATTACK_INTERVAL = 1.5
+    ATTACK_INTERVAL = 3
     SKILL_F7_DELAY = 5
     SKILL_F7_INTERVAL = 0.5
     SKILL_F7_AFTER_MOVE_DELAY = 0
     SKILL_F9_DELAY = 999999
-    SKILL_MOVE_DELAY = 15
-    DETECTION_WAITING_THRESHOLD = 4
+    SKILL_MOVE_DELAY = 20
+    DETECTION_WAITING_THRESHOLD = 5
     START_SEARCH_THRESHOLD = 2
     SEARCH_INTERVAL = 3
     # ENABLE FLAG
@@ -105,8 +104,7 @@ class La3Bot:
             screen_x, screen_y = get_screen_position(target_pos, self.window_offset)
             print('Target position x:{} y:{}'.format(screen_x, screen_y))
             # move the mouse
-            pyautogui.moveTo(x=screen_x, y=screen_y)
-            sleep(0.2)
+            pyautogui.moveTo(x=screen_x, y=screen_y, duration=0.05)
             last_f7_time = time() - self.last_f7_time
             if (self.ENABLE_F7
                 and (time() - self.last_move_time) > self.SKILL_F7_AFTER_MOVE_DELAY

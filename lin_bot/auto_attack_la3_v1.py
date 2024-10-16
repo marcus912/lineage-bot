@@ -10,7 +10,7 @@ from windowcapture import WindowCapture
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-DEBUG = True
+DEBUG = False
 
 # initialize the WindowCapture class
 wincap = WindowCapture()
