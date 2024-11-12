@@ -5,7 +5,7 @@ from vision import Vision
 from windowcapture import WindowCapture
 
 wincap = WindowCapture()
-detector = YoloDetection('ch2/chi2.pt')
+detector = YoloDetection('ch2/chi2.pt', conf=0.7)
 vision = Vision()
 
 wincap.start()

@@ -20,7 +20,7 @@ class YoloDetection:
         self.conf = conf
 
     def predict(self, frame):
-        return self.model.predict(frame)
+        return self.model.predict(frame, conf=self.conf)
 
     def plot_bboxes(self, results):
         rectangles = []
