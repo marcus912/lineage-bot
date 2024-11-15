@@ -28,13 +28,13 @@ class La3Bot:
     IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 80
     # Ignore target error margin
     IGNORE_TARGET_ERROR_MARGIN_RADIUS = 10
-    ATTACK_INTERVAL = 3
+    ATTACK_INTERVAL = 4.2
     SKILL_F7_DELAY = 5
     SKILL_F7_INTERVAL = 0.5
     SKILL_F7_AFTER_MOVE_DELAY = 0
     SKILL_F9_DELAY = 999999
-    SKILL_MOVE_DELAY = 20
-    DETECTION_WAITING_THRESHOLD = 5
+    SKILL_MOVE_DELAY = 30
+    DETECTION_WAITING_THRESHOLD = 6
     START_SEARCH_THRESHOLD = 2
     SEARCH_INTERVAL = 3
     # ENABLE FLAG
@@ -153,6 +153,7 @@ class La3Bot:
         self.ignore_positions = []
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.click(x=self.my_pos[0] + 50, y=self.my_pos[1] + 50, clicks=2, interval=0.2)
+        sleep(3)
 
     # threading methods
 
