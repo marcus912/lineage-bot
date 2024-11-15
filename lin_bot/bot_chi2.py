@@ -25,10 +25,10 @@ class Chi2Bot:
     INNER_IGNORE_RADIUS = 0
     STAIR_DETECT_RADIUS = 250
     # ignore same position targets if the distance gather than radius
-    IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 80
+    IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 120
     # Ignore target error margin
     IGNORE_TARGET_ERROR_MARGIN_RADIUS = 10
-    ATTACK_INTERVAL = 3
+    ATTACK_INTERVAL = 1
     SKILL_F7_DELAY = 5
     SKILL_F7_INTERVAL = 0.5
     SKILL_F7_AFTER_MOVE_DELAY = 0
@@ -153,6 +153,7 @@ class Chi2Bot:
         self.ignore_positions = []
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.click(x=self.my_pos[0] + 50, y=self.my_pos[1] + 50, clicks=2, interval=0.2)
+        sleep(1)
 
     # threading methods
 
