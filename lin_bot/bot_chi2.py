@@ -23,7 +23,7 @@ class Chi2Bot:
     INITIALIZING_SECONDS = 5
     OUTER_IGNORE_RADIUS = 500
     INNER_IGNORE_RADIUS = 0
-    STAIR_DETECT_RADIUS = 250
+    STAIR_DETECT_RADIUS = 400
     # ignore same position targets if the distance gather than radius
     IGNORE_TARGET_POSITION_DISTANCE_RADIUS = 120
     # Ignore target error margin

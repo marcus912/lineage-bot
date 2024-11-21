@@ -17,7 +17,7 @@ wincap = WindowCapture()
 # load the detector
 detector = YoloDetection('model/yolo/chi2.pt', conf=0.5)
 # load yolo model
-stair_detector = YoloDetection('model/yolo/stairs.pt')
+stair_detector = YoloDetection('model/yolo/stairs2.pt', conf=0.5)
 # load an empty Vision class
 vision = Vision()
 # initialize the bot
