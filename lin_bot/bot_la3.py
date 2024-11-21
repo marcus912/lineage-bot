@@ -153,7 +153,6 @@ class La3Bot:
         self.ignore_positions = []
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.click(x=self.my_pos[0] + 50, y=self.my_pos[1] + 50, clicks=2, interval=0.2)
-        sleep(3)
 
     # threading methods
 

@@ -25,7 +25,7 @@ bot = Chi2Bot((wincap.offset_x, wincap.offset_y), (wincap.w, wincap.h))
 
 wincap.start()
 detector.start()
-# stair_detector.start()
+stair_detector.start()
 bot.start()
 
 while True:

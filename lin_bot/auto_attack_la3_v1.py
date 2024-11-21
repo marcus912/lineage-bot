@@ -15,7 +15,7 @@ DEBUG = False
 # initialize the WindowCapture class
 wincap = WindowCapture()
 # load the detector
-detector = YoloDetection('model/yolo/la3-v3.pt', conf=0.5)
+detector = YoloDetection('model/yolo/la3-v3.pt', conf=0.3)
 # load yolo model
 stair_detector = YoloDetection('model/yolo/stairs.pt')
 # load an empty Vision class

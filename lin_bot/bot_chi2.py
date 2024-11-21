@@ -34,7 +34,7 @@ class Chi2Bot:
     SKILL_F7_AFTER_MOVE_DELAY = 0
     SKILL_F9_DELAY = 999999
     SKILL_MOVE_DELAY = 30
-    DETECTION_WAITING_THRESHOLD = 10
+    DETECTION_WAITING_THRESHOLD = 5
     START_SEARCH_THRESHOLD = 2
     SEARCH_INTERVAL = 3
     # ENABLE FLAG
@@ -153,7 +153,6 @@ class Chi2Bot:
         self.ignore_positions = []
         print('New last_detect_time {}', self.last_detect_time)
         pyautogui.click(x=self.my_pos[0] + 50, y=self.my_pos[1] + 50, clicks=2, interval=0.2)
-        sleep(1)
 
     # threading methods
 
