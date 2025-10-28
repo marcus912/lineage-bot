@@ -17,6 +17,6 @@ if not exist ".venv" (
 )
 
 echo install required python libs
-.\.venv\Scripts\activate && pip install -r requirements.txt && python lin_bot\auto_attack_chi2_v1.py
+.\.venv\Scripts\activate && pip install -r requirements.txt && python scripts\run_chi2.py
 
 pause
